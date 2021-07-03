@@ -14,7 +14,7 @@ import tensorflow as tf
 from prep import tokenizer, yj_dict
 
 # %% model load
-model = tf.keras.models.load_model('./myModel.h5')
+model = tf.keras.models.load_model('./outputs/myModel.h5')
 model.reset_states() 
 
 # %% Generate Sequences
@@ -50,5 +50,5 @@ print(generated)
 
 yoji_out = "\n".join(generated)
 
-with open('yoji_out.txt', 'w') as f:
+with open('./outputs/yoji_out.txt', 'w') as f:
 	f.write(yoji_out)

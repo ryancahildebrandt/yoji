@@ -11,7 +11,7 @@ author: Ryan Hildebrandt
 import pickle
 import tensorflow as tf
 
-with open("./scraped_data.pickle", "rb") as f:
+with open("./outputs/scraped_data.pickle", "rb") as f:
     kj_dict, kj_list, yj_dict, yoji_df = pickle.load(f)
 
 # %% prep yoji_df

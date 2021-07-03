@@ -101,11 +101,11 @@ for j in range(1,5):
 	for k in list(kj_dict["心"].keys()):
 		yoji_df[f'j{j}_{k}'] = [kj_dict[i][k] if i else None for i in yoji_df[f'j{j}']]
 
-yoji_df.to_csv("./yoji_df.csv")
+yoji_df.to_csv("./outputs/yoji_df.csv")
 
 yoji_df_missing = yoji_df[yoji_df.isnull().any(axis=1)]
-yoji_df_missing.to_csv("./yoji_df_missing.csv")
+yoji_df_missing.to_csv("./outputs/yoji_df_missing.csv")
 
-with open("./scraped_data.pickle", 'wb') as f:
+with open("./outputs/scraped_data.pickle", 'wb') as f:
 	pickle.dump([kj_dict, kj_list, yj_dict, yoji_df], f)
 

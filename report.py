@@ -15,10 +15,10 @@ from prep import yoji_df
 
 # %% Header
 img = Image.new('RGB', (1600, 300), color = (255, 220, 245))
-fnt = ImageFont.truetype("./corp_round_v1.ttf", 200)
+fnt = ImageFont.truetype("./data/corp_round_v1.ttf", 200)
 d = ImageDraw.Draw(img)
 d.text((250,50), "四  字  熟  語", font=fnt, fill=(0,0,0))
-img.save('./header.jpg')
+img.save('./outputs/header.jpg')
 
 # %% furigana for markdown
 def add_furigana(kanji, furigana):
@@ -156,6 +156,6 @@ Keep in mind that the sequential model used here doesn't take into account meani
 	dp.Text("""# 完了""")
 	)
 
-rprt.save(path='./yoji_rprt.html', open=True)
+rprt.save(path='./outputs/yoji_rprt.html', open=True)
 #rprt.publish(name='Wisdom_in_4_Characters', open=True, visibility=dp.Visibility.PUBLIC)
 #https://datapane.com/u/ryancahildebrandt/reports/wisdom-in-4-characters/

@@ -1,7 +1,7 @@
 # Wisdom in 4 Characters Or Less
 
 ---
-![Training a neural network to generate 四字熟語 (as best it can!)](./header.jpg)
+![Training a neural network to generate 四字熟語 (as best it can!)](./outputs/header.jpg)
 
 ---
 [*Open*](https://gitpod.io/#https://github.com/ryancahildebrandt/yoji) *in gitpod*
@@ -21,8 +21,8 @@ The dataset used for the current project was scraped/pulled from the following:
 
 ## *Outputs*
 
-+ The main [report](https://datapane.com/u/ryancahildebrandt/reports/wisdom-in-4-characters/), compiled with datapane and also in [html](./yoji_rprt.html) format
-+ The full [yoji_df](./yoji_df.csv) dataframe describing the idioms, their constituent kanji, and all additional characteristics from the data linked above
-+ List of generated [idioms](./yoji_out.txt), sans definitions and readings
-+ The same list, expanded out to a [dataframe](./yoji_out_df.csv) including readings and meanings of constituent characters and bigrams 
++ The main [report](https://datapane.com/u/ryancahildebrandt/reports/wisdom-in-4-characters/), compiled with datapane and also in [html](./outputs/yoji_rprt.html) format
++ The full [yoji_df](./outputs/yoji_df.csv) dataframe describing the idioms, their constituent kanji, and all additional characteristics from the data linked above
++ List of generated [idioms](./outputs/yoji_out.txt), sans definitions and readings
++ The same list, expanded out to a [dataframe](./outputs/yoji_out_df.csv) including readings and meanings of constituent characters and bigrams 
 

@@ -14,7 +14,7 @@ from prep import data_prepped, sequences
 from tensorflow import keras
 from tensorflow.keras.layers import Dense, Dropout, Embedding, LSTM
 
-with open("./scraped_data.pickle", "rb") as f:
+with open("./outputs/scraped_data.pickle", "rb") as f:
     kj_dict, kj_list, yj_dict, yoji_df = pickle.load(f)
 
 # %% model config
@@ -48,5 +48,5 @@ print(h.history)
 print(f"min loss: {min(h.history['loss'])}")
 print(f"accuracy range: {min(h.history['sparse_categorical_accuracy'])} - {max(h.history['sparse_categorical_accuracy'])}")
 
-model.save('./myModel.h5')
+model.save('./outputs/myModel.h5')
 
