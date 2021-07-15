@@ -8,7 +8,7 @@
 
 ## *Purpose*
 
-A project to generate 四字熟語 (yoji-jukugo, 4 character Japanese idioms), using a sequential tenworflow model.
+A project to generate 四字熟語 (yoji-jukugo, 4 character Japanese idioms), using a sequential tensorflow model.
 
 ---
 ## *Dataset*
