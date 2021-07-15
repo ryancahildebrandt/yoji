@@ -51,7 +51,7 @@ The dataset used for the current project was scraped/pulled from the following:
 	dp.DataTable(yoji_df),
 	dp.Text("""
 ## Model
-*Adapted from (this)[https://github.com/RajkumarGalaxy/NLP/blob/master/beginners-guide-to-text-generation-with-rnns.ipynb] example*
+*Adapted from [this](https://analyticsindiamag.com/beginners-guide-to-text-generation-with-rnns/) example*
 
 Since this is my first solo foray into implementing a ML model, I thought it best to adapt some working code so I could play around, tweak some parameters, and get a sense for how each of the parts work together. The model I adapted is linked just above.
 
