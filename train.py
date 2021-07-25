@@ -15,7 +15,7 @@ from tensorflow import keras
 from tensorflow.keras.layers import Dense, Dropout, Embedding, LSTM
 
 with open("./outputs/scraped_data.pickle", "rb") as f:
-    kj_dict, kj_list, yj_dict, yoji_df = pickle.load(f)
+    kj_dict, kj_list, yj_dict, yoji_df, bg_list, bg_dict = pickle.load(f)
 
 # %% model config
 spe = len(list(sequences))//64

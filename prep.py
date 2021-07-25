@@ -12,7 +12,7 @@ import pickle
 import tensorflow as tf
 
 with open("./outputs/scraped_data.pickle", "rb") as f:
-    kj_dict, kj_list, yj_dict, yoji_df = pickle.load(f)
+    kj_dict, kj_list, yj_dict, yoji_df, bg_list, bg_dict = pickle.load(f)
 
 # %% prep yoji_df
 tokenizer = {char:i for i,char in enumerate(kj_list)}

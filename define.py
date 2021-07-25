@@ -9,11 +9,11 @@ author: Ryan Hildebrandt
 # %% Doc setup
 import pandas as pd
 
-from prep import kj_dict
-from scrape import jmd_meanings, jmd_readings
+from scrape import bg_dict, jmd_meanings, jmd_readings, kj_dict
 
 # %% read yoji_out
-yoji_out = open("./yoji_out.txt").read().splitlines()
+yoji_bg_out = open("./outputs/yoji_bg_out.txt").read().splitlines()
+yoji_out = open("./outputs/yoji_out.txt").read().splitlines()
 
 # %% yoji_out_df building
 yoji_out_df = pd.DataFrame()
@@ -27,9 +27,27 @@ for j in range(1,5):
 # for bigrams within the 4 char compounds
 for j in [1,3]:
 	yoji_out_df[f'j{j}{j+1}'] = yoji_out_df[f'j{j}'] + yoji_out_df[f'j{j+1}'] 
-	yoji_out_df[f'j{j}{j+1}_Meanings'] = [jmd_meanings(i) for i in yoji_out_df[f'j{j}{j+1}']]
-	yoji_out_df[f'j{j}{j+1}_Readings'] = [jmd_readings(i) for i in yoji_out_df[f'j{j}{j+1}']]
+	yoji_out_df[f'j{j}{j+1}_Meanings'] = [bg_dict[i]['Meanings'] if i in bg_dict.keys() else None for i in yoji_out_df[f'j{j}{j+1}']]
+	yoji_out_df[f'j{j}{j+1}_Readings'] = [bg_dict[i]['Readings'] if i in bg_dict.keys() else None for i in yoji_out_df[f'j{j}{j+1}']]
 
 print(yoji_out_df)
-yoji_out_df.to_csv("./yoji_out_df.csv")
+yoji_out_df.to_csv("./outputs/yoji_out_df.csv")
+
+# %% yoji_bg_out_df building
+yoji_bg_out_df = pd.DataFrame()
+yoji_bg_out_df["yoji"] = yoji_bg_out
+
+for j in range(1,5):
+	yoji_bg_out_df[f'j{j}'] = [i[j-1:j] for i in yoji_bg_out_df["yoji"]]
+	yoji_bg_out_df[f'j{j}_Meanings'] = [kj_dict[i]['Meanings'] if i else None for i in yoji_bg_out_df[f'j{j}']]
+	yoji_bg_out_df[f'j{j}_Readings'] = [kj_dict[i]['Readings'] if i else None for i in yoji_bg_out_df[f'j{j}']]
+
+# for bigrams within the 4 char compounds
+for j in [1,3]:
+	yoji_bg_out_df[f'j{j}{j+1}'] = yoji_bg_out_df[f'j{j}'] + yoji_bg_out_df[f'j{j+1}'] 
+	yoji_bg_out_df[f'j{j}{j+1}_Meanings'] = [bg_dict[i]['Meanings'] if i else None for i in yoji_bg_out_df[f'j{j}{j+1}']]
+	yoji_bg_out_df[f'j{j}{j+1}_Readings'] = [bg_dict[i]['Readings'] if i else None for i in yoji_bg_out_df[f'j{j}{j+1}']]
+
+print(yoji_bg_out_df)
+yoji_bg_out_df.to_csv("./outputs/yoji_bg_out_df.csv")
 

@@ -8,10 +8,14 @@ author: Ryan Hildebrandt
 
 # %% Doc setup
 import datapane as dp
+import pickle
 
 from PIL import Image, ImageDraw, ImageFont
-from define import yoji_out_df
-from prep import yoji_df
+from define import yoji_bg_out_df, yoji_out_df
+
+with open("./outputs/scraped_data.pickle", "rb") as f:
+    kj_dict, kj_list, yj_dict, yoji_df, bg_list, bg_dict = pickle.load(f)
+
 
 # %% Header
 img = Image.new('RGB', (1600, 300), color = (255, 220, 245))
@@ -153,9 +157,44 @@ Keep in mind that the sequential model used here doesn't take into account meani
 + sha-kou-mei-dou
 + Life in the fast lane
 """),
+	dp.Text("""
+# **Update**
+
+After sharing the initial project with some coworkers, it was suggested (by @DC & @JZ, specifically) that I retrain the model on bigrams within each idiom rather than as a sequence of 4 individual characters, as this more closely aligns with how yoji-jukugo are semantically divided and understood. Below, I get into that model and how it performed as compared to the above.
+
+## Bigram Model
+
+The main change to the dataprocessing involved segmenting each 4 character idiom into 2 bigrams, and treating each unique bigram in the same way as individual characters were treated. By going from a 4 character string to a sequence of 2 bigrams, the model effectively only had to learn what bigrams were most likely to be paired with one another. Once the data was prepped, model tuning returned slightly different hyperparameters.
+
+---
+### Bigram Model Summary
+
+Model: "sequential"
+| **Layer (type)**      | **Output Shape** | **Param #** |
+|-----------------------|------------------|-------------|
+| embedding (Embedding) | (64, None, 64)   | 513344      |
+| lstm (LSTM)           | (64, None, 224)  | 258944      |
+| dropout (Dropout)     | (64, None, 224)  | 0           |
+| lstm_1 (LSTM)         | (64, None, 224)  | 402304      |
+| dropout_1 (Dropout)   | (64, None, 224)  | 0           |
+| dense (Dense)         | (64, None, 8021) | 1804725     |
+
++ Total params: 2,979,317
++ Trainable params: 2,979,317
++ Non-trainable params: 0
+
+---
+## Bigram Model Evaluation
+
+As compared to the previous model, the bigram approach defines each unique bigram found in the data and treats it as a non-divisible unit. One result of this is that there are more (~4x more) unique bigrams that the model must choose from as compared to individual characters. Consequentially, the model performs even worse (~0.3% compared to 2%) at predicting the second half of an idiom from the first half. The model has less context to pull from (3 contextual units vs 1) and far more choices to predict, so this makes sense. That being said, the output of this model was seemingly *much* more interpretable than the previous model, as the data processing opted for bigrams instead of barely-if-at-all related characters as the main focus. You can see this in the included output table, where many more bigrams have meanings and readings that could be made into idioms as compared to the output of the previous model.
+
+### TL;DR
+*Task got harder, accuracy went way down, but the output is more interpretable so cheers to that*
+"""),
+	dp.DataTable(yoji_bg_out_df),
 	dp.Text("""# 完了""")
 	)
 
 rprt.save(path='./outputs/yoji_rprt.html', open=True)
-#rprt.publish(name='Wisdom_in_4_Characters', open=True, visibility=dp.Visibility.PUBLIC)
+rprt.publish(name='Wisdom_in_4_Characters', open=True, visibility=dp.Visibility.PUBLIC)
 #https://datapane.com/u/ryancahildebrandt/reports/wisdom-in-4-characters/

@@ -69,7 +69,14 @@ yj_kana = [re.sub("\[|\]", "", i) for i in yj_kana]
 
 yj_dict = {yj_list[i]:{"pos":yj_pos[i], "reading":yj_kana[i]} for i in range(len(yj_list))}
 
-# %% Kanji dict building
+# %% bigrams
+bg_list = [[i[:2],i[2:]] for i in yj_list]
+bg_list = [i for j in bg_list for i in j]
+bg_list = sorted(set(bg_list))
+
+bg_dict = {bg_list[i]:{"Meanings":jmd_meanings(bg_list[i]) if bg_list[i] != " " else [" "],"Readings":jmd_readings(bg_list[i]) if bg_list[i] != " " else [" "]} for i in range(len(bg_list))}
+
+# %% kanji dict building
 kj_list = sorted(set(' '.join(yj_list)))
 kj_chars = [re.findall(r"([一-龯々]:\d+:[a-zA-Z, -]*)|$", str(jmd_char_lookup(i))) for i in kj_list] 
 kj_chars = [i[0].split(":") for i in kj_chars]+[["々","3","kanji repetition mark"]]
@@ -101,11 +108,18 @@ for j in range(1,5):
 	for k in list(kj_dict["心"].keys()):
 		yoji_df[f'j{j}_{k}'] = [kj_dict[i][k] if i else None for i in yoji_df[f'j{j}']]
 
+yoji_df["bg1"] = [i[:2] for i in yoji_df["yoji"]]
+yoji_df["bg1_Meanings"] = [bg_dict[i]["Meanings"] for i in yoji_df["bg1"]]
+yoji_df["bg1_Readings"] = [bg_dict[i]["Readings"] for i in yoji_df["bg1"]]
+yoji_df["bg2"] = [i[:2] for i in yoji_df["yoji"]]
+yoji_df["bg2_Meanings"] = [bg_dict[i]["Meanings"] for i in yoji_df["bg2"]]
+yoji_df["bg2_Readings"] = [bg_dict[i]["Readings"] for i in yoji_df["bg2"]]
+
 yoji_df.to_csv("./outputs/yoji_df.csv")
 
 yoji_df_missing = yoji_df[yoji_df.isnull().any(axis=1)]
 yoji_df_missing.to_csv("./outputs/yoji_df_missing.csv")
 
 with open("./outputs/scraped_data.pickle", 'wb') as f:
-	pickle.dump([kj_dict, kj_list, yj_dict, yoji_df], f)
+	pickle.dump([kj_dict, kj_list, yj_dict, yoji_df, bg_list, bg_dict], f)
 

@@ -26,3 +26,8 @@ The dataset used for the current project was scraped/pulled from the following:
 + List of generated [idioms](./outputs/yoji_out.txt), sans definitions and readings
 + The same list, expanded out to a [dataframe](./outputs/yoji_out_df.csv) including readings and meanings of constituent characters and bigrams 
 
+---
+
+## *Update!*
+
++ After sharing the initial project with some coworkers, it was suggested (by @DC & @JZ) that I retrain the model on bigrams within each idiom, as this more closely aligns with how yoji-jukugo are semantically divided and understood. I've updated the report linked above with some additional thoughts on the new model and its results!
