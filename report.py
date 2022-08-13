@@ -6,25 +6,28 @@ Created on Wed Jun 23 18:40:11 EDT 2021
 author: Ryan Hildebrandt
 """
 
-# %% Doc setup
+# Doc setup
 import datapane as dp
 import pickle
 
-from PIL import Image, ImageDraw, ImageFont
-from define import yoji_bg_out_df, yoji_out_df
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
+from define import yoji_bg_out_df
+from define import yoji_out_df
 
 with open("./outputs/scraped_data.pickle", "rb") as f:
     kj_dict, kj_list, yj_dict, yoji_df, bg_list, bg_dict = pickle.load(f)
 
 
-# %% Header
+# Header
 img = Image.new('RGB', (1600, 300), color = (255, 220, 245))
 fnt = ImageFont.truetype("./data/corp_round_v1.ttf", 200)
 d = ImageDraw.Draw(img)
 d.text((250,50), "四  字  熟  語", font=fnt, fill=(0,0,0))
 img.save('./outputs/header.jpg')
 
-# %% furigana for markdown
+# furigana for markdown
 def add_furigana(kanji, furigana):
 	ruby = f'<ruby>{kanji}<rp>(</rp><rt>{furigana}</rt><rp>)</rp><ruby>'
 	return ruby
@@ -32,7 +35,7 @@ def add_furigana(kanji, furigana):
 out_dict = dict(zip(["一断風雨","二索呻馬","一気門奇","勉流悪人","面思同鳳","苦闘力不","不才由明","用人同曲","不心禽斥","一用発四","寝雨麗心","車行命道"],["いちだんふうう","にさくしんば","いっきもんき","べんりゅうあくにん","めんしどうほう","くとうりょくふ","ふさいゆうみょう","ようにんどうきょく","ふしんきんたい","ひとようはっし","ねあめれいしん","しゃこうめいどう"]))
 furigana_list = [add_furigana(y,f) for y,f in out_dict.items()]
 
-# %% Report
+# Report
 rprt = dp.Report(
 	dp.Text("""
 # Wisdom in 4 Characters Or Less

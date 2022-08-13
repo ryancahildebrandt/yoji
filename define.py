@@ -6,16 +6,19 @@ Created on Thu Jun 17 20:15:22 EDT 2021
 author: Ryan Hildebrandt
 """
 
-# %% Doc setup
+# Doc setup
 import pandas as pd
 
-from scrape import bg_dict, jmd_meanings, jmd_readings, kj_dict
+from scrape import bg_dict
+from scrape import jmd_meanings
+from scrape import jmd_readings
+from scrape import kj_dict
 
-# %% read yoji_out
+# read yoji_out
 yoji_bg_out = open("./outputs/yoji_bg_out.txt").read().splitlines()
 yoji_out = open("./outputs/yoji_out.txt").read().splitlines()
 
-# %% yoji_out_df building
+# yoji_out_df building
 yoji_out_df = pd.DataFrame()
 yoji_out_df["yoji"] = yoji_out
 
@@ -33,7 +36,7 @@ for j in [1,3]:
 print(yoji_out_df)
 yoji_out_df.to_csv("./outputs/yoji_out_df.csv")
 
-# %% yoji_bg_out_df building
+# yoji_bg_out_df building
 yoji_bg_out_df = pd.DataFrame()
 yoji_bg_out_df["yoji"] = yoji_bg_out
 

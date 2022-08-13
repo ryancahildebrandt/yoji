@@ -6,18 +6,23 @@ Created on Sat Jun  5 12:14:49 EDT 2021
 author: Ryan Hildebrandt
 """
 
-# %% Doc setup
+# Doc setup
 #https://github.com/RajkumarGalaxy/NLP/blob/master/beginners-guide-to-text-generation-with-rnns.ipynb
 import pickle
 
-from prep_2 import bg_list, data_prepped, sequences
+from prep_2 import bg_list
+from prep_2 import data_prepped
+from prep_2 import sequences
 from tensorflow import keras
-from tensorflow.keras.layers import Dense, Dropout, Embedding, LSTM
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Dropout
+from tensorflow.keras.layers import Embedding
+from tensorflow.keras.layers import LSTM
 
 with open("./outputs/scraped_data.pickle", "rb") as f:
     kj_dict, kj_list, yj_dict, yoji_df, bg_list, bg_dict = pickle.load(f)
 
-# %% model config
+# model config
 spe = len(list(sequences))//64
 
 model = keras.Sequential([
@@ -38,7 +43,7 @@ model.compile(
 	loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),
 	metrics=[keras.metrics.SparseCategoricalAccuracy()])
 
-# %% model train
+# model train
 h = model.fit(
 	data_prepped, 
 	epochs=10, 

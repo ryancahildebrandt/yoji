@@ -6,17 +6,18 @@ Created on Thu May 27 20:51:09 EDT 2021
 author: Ryan Hildebrandt
 """
 
-# %% Doc setup
+# Doc setup
 import pandas as pd
 import pickle
 import re
 import requests
 
-from bs4 import BeautifulSoup, SoupStrainer
+from bs4 import BeautifulSoup
+from bs4 import SoupStrainer
 from itertools import compress
 from jamdict import Jamdict
 
-# %% Functions
+# Functions
 def jmd_char_lookup(kanji):
 	out = jmd.lookup(kanji).chars if len(kanji)!=0 else ":0:"
 	return out
@@ -48,18 +49,18 @@ def kdb_att_lookup(kanji, att):
 	out = None if len(res)==0 else res
 	return out
 
-# %% KDB & JMD lookups
+# KDB & JMD lookups
 jmd = Jamdict()
 kdb_kanji = pd.read_csv("./data/Kanji_20201227_151030.csv", sep=";")[['Kanji','Grade','Kanji Classification','JLPT-test','Kanji Frequency with Proper Nouns','Kanji Frequency without Proper Nouns','Symmetry']]
 
-# %% Yoji scrape
+# Yoji scrape
 yoji_page = requests.get("http://www.edrdg.org/projects/yojijukugo.html")
 yoji_soup = BeautifulSoup(yoji_page.content, "html.parser", parse_only=SoupStrainer("td"))
 yoji_list = [i.get_text() for i in yoji_soup if len(i.get_text())>4]
 yoji_filter = [(len(i)>2) for i in [re.findall(r"[一-龯々]{3,4}|$",i)[0] for i in yoji_list]]
 yoji_list = list(compress(yoji_list,yoji_filter))
 
-# %% yoji dict building
+# yoji dict building
 yj_list = [re.findall(r"[一-龯々]{3,4}|$",i)[0].ljust(4) for i in yoji_list]
 
 yj_pos = [re.findall(r"\([a-z,-]*\)|$",i)[0] for i in yoji_list]
@@ -69,14 +70,14 @@ yj_kana = [re.sub("\[|\]", "", i) for i in yj_kana]
 
 yj_dict = {yj_list[i]:{"pos":yj_pos[i], "reading":yj_kana[i]} for i in range(len(yj_list))}
 
-# %% bigrams
+# bigrams
 bg_list = [[i[:2],i[2:]] for i in yj_list]
 bg_list = [i for j in bg_list for i in j]
 bg_list = sorted(set(bg_list))
 
 bg_dict = {bg_list[i]:{"Meanings":jmd_meanings(bg_list[i]) if bg_list[i] != " " else [" "],"Readings":jmd_readings(bg_list[i]) if bg_list[i] != " " else [" "]} for i in range(len(bg_list))}
 
-# %% kanji dict building
+# kanji dict building
 kj_list = sorted(set(' '.join(yj_list)))
 kj_chars = [re.findall(r"([一-龯々]:\d+:[a-zA-Z, -]*)|$", str(jmd_char_lookup(i))) for i in kj_list] 
 kj_chars = [i[0].split(":") for i in kj_chars]+[["々","3","kanji repetition mark"]]
@@ -97,7 +98,7 @@ i:{
 "Symmetry":kdb_att_lookup(i,"Symmetry") if i != " " else [" "]
 } for ind,i in enumerate(kj_list)}
 
-# %% yoji_df building
+# yoji_df building
 yoji_df = pd.DataFrame()
 yoji_df["yoji"] = yj_dict.keys()
 yoji_df["yj_pos"] = [i["pos"] for i in yj_dict.values()]

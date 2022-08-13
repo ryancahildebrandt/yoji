@@ -6,18 +6,19 @@ Created on Sat Jun 12 19:57:09 EDT 2021
 author: Ryan Hildebrandt
 """
 
-# %% Doc setup
+# Doc setup
 import numpy as np
 import random
 import tensorflow as tf
 
-from prep_2 import tokenizer, yj_dict
+from prep_2 import tokenizer
+from prep_2 import yj_dict
 
-# %% model load
+# model load
 model = tf.keras.models.load_model('./outputs/myModel_bg.h5')
 model.reset_states() 
 
-# %% Generate Sequences
+# Generate Sequences
 sample = random.choice(list(yj_dict.keys()))
 sample = [sample[:2],sample[2:]]
 sample_vector = [tokenizer[s] for s in sample]

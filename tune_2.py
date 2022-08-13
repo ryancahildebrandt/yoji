@@ -6,13 +6,17 @@ Created on Tue Jun 22 20:27:48 EDT 2021
 author: Ryan Hildebrandt
 """
 
-# %% Doc setup
+# Doc setup
 import pickle
 
 from kerastuner import RandomSearch
-from prep_2 import data_prepped, sequences
+from prep_2 import data_prepped
+from prep_2 import sequences
 from tensorflow import keras
-from tensorflow.keras.layers import Dense, Dropout, Embedding, LSTM
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Dropout
+from tensorflow.keras.layers import Embedding
+from tensorflow.keras.layers import LSTM
 
 STEPS_PER_EPOCH = len(list(sequences))//64
 
