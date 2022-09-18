@@ -98,6 +98,8 @@ i:{
 "Symmetry":kdb_att_lookup(i,"Symmetry") if i != " " else [" "]
 } for ind,i in enumerate(kj_list)}
 
+kj_df = pd.DataFrame.from_dict(kj_dict, orient = "index")
+
 # yoji_df building
 yoji_df = pd.DataFrame()
 yoji_df["yoji"] = yj_dict.keys()
@@ -117,6 +119,7 @@ yoji_df["bg2_Meanings"] = [bg_dict[i]["Meanings"] for i in yoji_df["bg2"]]
 yoji_df["bg2_Readings"] = [bg_dict[i]["Readings"] for i in yoji_df["bg2"]]
 
 yoji_df.to_csv("./outputs/yoji_df.csv")
+kj_df.to_csv("./outputs/kj_df.csv")
 
 yoji_df_missing = yoji_df[yoji_df.isnull().any(axis=1)]
 yoji_df_missing.to_csv("./outputs/yoji_df_missing.csv")

@@ -205,5 +205,6 @@ dependencies:
   - pip:
     - chirptext==0.1.2
     - jamdict==0.1a11.post2
+    - jamdict-data==1.5
     - puchikarui==0.1
 prefix: /home/ryan/miniconda3/envs/yoji_env
