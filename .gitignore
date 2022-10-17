@@ -1,1 +1,6 @@
 *~
+__pycache__/
+*.ttf
+*.run
+gputest.py
+hp_tuning/
