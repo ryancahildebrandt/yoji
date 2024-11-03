@@ -1,0 +1,15 @@
+[project]
+name = "yoji"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.9"
+dependencies = [
+    "beautifulsoup4>=4.12.3",
+    "datapane>=0.17.0",
+    "jamdict>=0.1a11.post2",
+    "numpy>=2.0.2",
+    "pandas>=1.5.3",
+    "pillow>=11.0.0",
+    "requests>=2.32.3",
+    "tensorflow>=2.18.0",
+]
