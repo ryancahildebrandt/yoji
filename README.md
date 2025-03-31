@@ -4,7 +4,8 @@
 ![Training a neural network to generate 四字熟語 (as best it can!)](./outputs/header.jpg)
 
 ---
-[*Open*](https://gitpod.io/#https://github.com/ryancahildebrandt/yoji) *in gitpod*
+[![Open in gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ryancahildebrandt/yoji)
+[![This project contains 0% LLM-generated content](https://brainmade.org/88x31-dark.png)](https://brainmade.org/)
 
 ## *Purpose*
 
